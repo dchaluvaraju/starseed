@@ -1,2 +1,2 @@
 # starseed
-Map the syllable of a name to its respective Lunar Mansion (Nakshatra)
+Identify syllable of a name and map it to its respective Lunar Mansion (Nakshatra)
