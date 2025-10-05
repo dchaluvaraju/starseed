@@ -311,8 +311,88 @@
         </section>
 
         <footer class="text-center py-8 border-t border-gray-200">
-            <p class="text-sm text-gray-500">&copy; 2025 Starseed. All Rights Reserved.</p>
+            <div class="max-w-4xl mx-auto px-4">
+                <p class="text-sm text-gray-500 mb-4">&copy; 2025 Starseed. All Rights Reserved.</p>
+                <div class="flex justify-center items-center space-x-6 text-sm">
+                    <button onclick="showPrivacyNotice()" class="text-purple-600 hover:text-purple-800 underline transition-colors">
+                        Privacy Notice
+                    </button>
+                    <span class="text-gray-300">|</span>
+                    <a href="https://github.com/dchaluvaraju/starseed.git" target="_blank" class="text-purple-600 hover:text-purple-800 underline transition-colors">
+                        View Source
+                    </a>
+                </div>
+            </div>
         </footer>
+
+        <!-- Privacy Notice Modal -->
+        <div id="privacyModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[80vh] overflow-y-auto shadow-2xl">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-2xl font-bold text-gray-800 brand-font">Privacy Notice</h2>
+                            <button onclick="hidePrivacyNotice()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                        </div>
+                    </div>
+                    <div class="p-6 text-gray-700 leading-relaxed">
+                        <p class="mb-4"><strong>Last Updated:</strong> October 5, 2025</p>
+
+                        <p class="mb-6">
+                            Starseed is a web application that helps you discover the Nakshatra (Lunar Mansion) associated with your name using the Avakahada Chakra system from Vedic astrology. This privacy notice explains how we handle your personal data in compliance with the UK General Data Protection Regulation (UK GDPR).
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-purple-800">What Data We Process</h3>
+                        <ul class="list-disc pl-6 mb-6 space-y-2">
+                            <li><strong>Name:</strong> When you enter your name into the Starseed webapp, we process it to identify its core syllable and map it to a corresponding Nakshatra.</li>
+                            <li><strong>No Other Data:</strong> We do not collect or process any additional personal information, such as email addresses, IP addresses, or other identifiers.</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 text-purple-800">How We Process Your Data</h3>
+                        <ul class="list-disc pl-6 mb-6 space-y-2">
+                            <li><strong>Client-Side Processing:</strong> Your name is processed entirely in your browser using JavaScript. No data is sent to or stored on our servers.</li>
+                            <li><strong>No Storage:</strong> We do not store your name or any other personal data after processing. The data is used only to display your Nakshatra result during your session.</li>
+                            <li><strong>No Third-Party Sharing:</strong> Your name is not shared with any third parties, including analytics services or external tools.</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 text-purple-800">Lawful Basis for Processing</h3>
+                        <p class="mb-6">
+                            We process your name based on your implied consent, provided by voluntarily entering your name to receive a Nakshatra result. You may withdraw this consent by not using the webapp.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-purple-800">Your Rights</h3>
+                        <p class="mb-6">
+                            Under UK GDPR, you have rights over your personal data, including the right to access, rectify, or erase it. Since Starseed does not store your data, there is no stored data to access or erase. If you have questions about your rights, please contact us.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-purple-800">Hosting and Security</h3>
+                        <ul class="list-disc pl-6 mb-6 space-y-2">
+                            <li>Starseed is hosted on GitHub Pages, a static hosting service. No server-side logging of your name occurs.</li>
+                            <li>We use Tailwind CSS and vanilla JavaScript, ensuring no external dependencies collect your data.</li>
+                        </ul>
+
+                        <h3 class="text-lg font-semibold mb-3 text-purple-800">International Users</h3>
+                        <p class="mb-6">
+                            If you access Starseed from the European Union, the EU GDPR may apply. This notice meets both UK and EU GDPR transparency requirements. We do not target EU users specifically, but our practices ensure compliance for all users.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-purple-800">Changes to This Notice</h3>
+                        <p class="mb-6">
+                            We may update this notice to reflect changes in our practices or legal requirements. The latest version will be posted on our GitHub repository and webapp.
+                        </p>
+
+                        <h3 class="text-lg font-semibold mb-3 text-purple-800">Contact Us</h3>
+                        <p class="mb-6">
+                            If you have questions about this privacy notice or how we handle your data, please contact us through our GitHub repository.
+                        </p>
+
+                        <p class="text-center text-purple-600 font-medium">
+                            Thank you for using Starseed! 🌟
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -401,11 +481,42 @@
                 }
             };
 
+            // --- Nakshatra data with all columns ---
+            const nakshatraData = {
+                'Ashwini': { modernName: 'Beta Arietis', symbol: 'Horse Head', rulingPlanet: 'Ketu', deity: 'Ashwini Kumaras' },
+                'Bharani': { modernName: '35 Arietis', symbol: 'Yoni (Womb)', rulingPlanet: 'Venus', deity: 'Yama' },
+                'Krittika': { modernName: 'Pleiades (Alcyone)', symbol: 'Razor/Knife', rulingPlanet: 'Sun', deity: 'Agni' },
+                'Rohini': { modernName: 'Aldebaran', symbol: 'Cart/Chariot', rulingPlanet: 'Moon', deity: 'Brahma' },
+                'Mrigashira': { modernName: 'Lambda Orionis', symbol: 'Serpent/Head of Deer', rulingPlanet: 'Mars', deity: 'Soma' },
+                'Ardra': { modernName: 'Betelgeuse', symbol: 'Teardrop', rulingPlanet: 'Rahu', deity: 'Rudra' },
+                'Punarvasu': { modernName: 'Castor and Pollux', symbol: 'Bow and Quiver', rulingPlanet: 'Jupiter', deity: 'Aditi' },
+                'Pushya': { modernName: 'Delta Cancri', symbol: 'Cow\'s Udder/Flower', rulingPlanet: 'Saturn', deity: 'Brihaspati' },
+                'Ashlesha': { modernName: 'Alpha Hydrae', symbol: 'Coiled Serpent', rulingPlanet: 'Mercury', deity: 'Nagas' },
+                'Magha': { modernName: 'Regulus', symbol: 'Throne/Palankeen', rulingPlanet: 'Ketu', deity: 'Pitris' },
+                'Purva Phalguni': { modernName: 'Delta Leonis', symbol: 'Hammock/Front Legs of Bed', rulingPlanet: 'Venus', deity: 'Bhaga' },
+                'Uttara Phalguni': { modernName: 'Denebola', symbol: 'Rear Legs of Bed', rulingPlanet: 'Sun', deity: 'Aryaman' },
+                'Hasta': { modernName: 'Delta Corvi', symbol: 'Hand/Palm', rulingPlanet: 'Moon', deity: 'Savitar' },
+                'Chitra': { modernName: 'Spica', symbol: 'Pearl/Jewel', rulingPlanet: 'Mars', deity: 'Vishvakarma' },
+                'Swati': { modernName: 'Arcturus', symbol: 'Coral/Sapling in Wind', rulingPlanet: 'Rahu', deity: 'Vayu' },
+                'Vishakha': { modernName: 'Alpha Librae', symbol: 'Triumphal Arch/Potter\'s Wheel', rulingPlanet: 'Jupiter', deity: 'Indra-Agni' },
+                'Anuradha': { modernName: 'Delta Scorpii', symbol: 'Lotus/Umbrella', rulingPlanet: 'Saturn', deity: 'Mitra' },
+                'Jyeshtha': { modernName: 'Antares', symbol: 'Earring/Umbrella', rulingPlanet: 'Mercury', deity: 'Indra' },
+                'Mula': { modernName: 'Lambda Scorpii', symbol: 'Roots/Tail of Lion', rulingPlanet: 'Ketu', deity: 'Nirriti' },
+                'Purva Ashadha': { modernName: 'Delta Sagittarii', symbol: 'Fan/Winnowing Basket', rulingPlanet: 'Venus', deity: 'Apah' },
+                'Uttara Ashadha': { modernName: 'Sigma Sagittarii', symbol: 'Elephant Tusk/Mango Plank', rulingPlanet: 'Sun', deity: 'Vishvadevas' },
+                'Shravana': { modernName: 'Altair', symbol: 'Ear/Three Footprints', rulingPlanet: 'Moon', deity: 'Vishnu' },
+                'Dhanishta': { modernName: 'Alpha Delphini', symbol: 'Drum/Flute', rulingPlanet: 'Mars', deity: 'Vasus' },
+                'Shatabhisha': { modernName: 'Lambda Aquarii', symbol: 'Circle/1000 Flowers', rulingPlanet: 'Rahu', deity: 'Varuna' },
+                'Purva Bhadrapada': { modernName: 'Alpha Pegasi', symbol: 'Two-Faced Man/Sword', rulingPlanet: 'Jupiter', deity: 'Aja Ekapada' },
+                'Uttara Bhadrapada': { modernName: 'Gamma Pegasi', symbol: 'Twins/Serpent in Water', rulingPlanet: 'Saturn', deity: 'Ahirbudhnya' },
+                'Revati': { modernName: 'Zeta Piscium', symbol: 'Fish/Drum', rulingPlanet: 'Mercury', deity: 'Pushan' }
+            };
+
             // --- Function to highlight cells and display detailed results ---
             const highlightAndDisplay = (syllablesMap) => {
-                let resultsHTML = '<h3 class="text-2xl font-bold mb-6 text-center text-purple-800 brand-font">✨ Your Starseed Connection ✨</h3>';
-                resultsHTML += '<div class="max-w-4xl mx-auto">';
-                resultsHTML += '<div class="grid grid-cols-1 gap-6">';
+                let resultsHTML = '<h3 class="text-2xl font-bold mb-6 text-center text-purple-800 brand-font">✨ Your Complete Starseed Profile ✨</h3>';
+                resultsHTML += '<div class="max-w-6xl mx-auto">';
+                resultsHTML += '<div class="grid grid-cols-1 gap-8">';
                 const alreadyDisplayed = new Set(); // Use a unique key to track displayed results
 
                 nakshatraTable.querySelectorAll('tr').forEach((row, rowIndex) => {
@@ -426,64 +537,99 @@
                                 // Highlight cells
                                 cell.classList.add('highlight');
 
-                                // Build HTML for this result card - more centered and innovative
+                                // Get additional nakshatra information
+                                const nakshatraInfo = nakshatraData[nakshatraName] || { symbol: 'N/A', rulingPlanet: 'N/A', deity: 'N/A' };
+
+                                // Build HTML for this result card - comprehensive display
                                 resultsHTML += `
-                                    <div class="mx-auto max-w-2xl">
-                                        <div class="bg-gradient-to-br from-white via-purple-50 to-blue-50 rounded-2xl border-2 border-purple-200 shadow-2xl hover:shadow-purple-300/50 transition-all duration-500 transform hover:scale-105 p-8 text-center">
-                                            <!-- Main syllable display -->
-                                            <div class="mb-6">
-                                                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full shadow-lg mb-4">
-                                                    <span class="text-2xl font-bold text-white brand-font">
+                                    <div class="mx-auto max-w-5xl">
+                                        <div class="bg-gradient-to-br from-white via-purple-50 to-blue-50 rounded-3xl border-2 border-purple-200 shadow-2xl hover:shadow-purple-300/50 transition-all duration-500 transform hover:scale-[1.02] p-8">
+                                            <!-- Header with syllable and basic info -->
+                                            <div class="text-center mb-8">
+                                                <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full shadow-xl mb-4">
+                                                    <span class="text-3xl font-bold text-white brand-font">
                                                         ${capitalize(cellText)}
                                                     </span>
                                                 </div>
-                                                <p class="text-sm text-purple-600 font-medium">Your Soul Syllable</p>
+                                                <p class="text-lg text-purple-600 font-medium mb-2">Your Soul Syllable</p>
+                                                <p class="text-sm text-gray-600 italic">From "${syllablesMap.get(cellText).word}"</p>
                                             </div>
 
-                                            <!-- Star constellation visual -->
+                                            <!-- Complete information grid -->
+                                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                                                <div class="bg-white/70 rounded-xl p-4 backdrop-blur-sm text-center">
+                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Nakshatra</p>
+                                                    <p class="text-lg font-bold text-purple-700 brand-font">${nakshatraName}</p>
+                                                </div>
+                                                <div class="bg-white/70 rounded-xl p-4 backdrop-blur-sm text-center">
+                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Modern Astronomical Name</p>
+                                                    <p class="text-sm font-semibold text-blue-700">${nakshatraInfo.modernName}</p>
+                                                </div>
+                                                <div class="bg-white/70 rounded-xl p-4 backdrop-blur-sm text-center">
+                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Pada</p>
+                                                    <p class="text-2xl font-bold text-indigo-700">${padaNumber}</p>
+                                                </div>
+                                                <div class="bg-white/70 rounded-xl p-4 backdrop-blur-sm text-center">
+                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Symbol</p>
+                                                    <p class="text-sm font-semibold text-green-700">${nakshatraInfo.symbol}</p>
+                                                </div>
+                                                <div class="bg-white/70 rounded-xl p-4 backdrop-blur-sm text-center">
+                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Ruling Planet</p>
+                                                    <p class="text-sm font-semibold text-orange-700">${nakshatraInfo.rulingPlanet}</p>
+                                                </div>
+                                                <div class="bg-white/70 rounded-xl p-4 backdrop-blur-sm text-center">
+                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Deity</p>
+                                                    <p class="text-sm font-semibold text-purple-700">${nakshatraInfo.deity}</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Cosmic constellation visual -->
                                             <div class="flex justify-center items-center mb-6">
                                                 <div class="relative">
                                                     <!-- Star pattern background -->
                                                     <div class="absolute inset-0 flex items-center justify-center">
-                                                        <div class="w-32 h-32 border-2 border-purple-200 rounded-full opacity-30"></div>
-                                                        <div class="absolute w-24 h-24 border border-purple-300 rounded-full opacity-40"></div>
+                                                        <div class="w-40 h-40 border-2 border-purple-200 rounded-full opacity-20"></div>
+                                                        <div class="absolute w-32 h-32 border border-purple-300 rounded-full opacity-30"></div>
+                                                        <div class="absolute w-24 h-24 border border-purple-400 rounded-full opacity-40"></div>
                                                     </div>
-                                                    <!-- Central star -->
-                                                    <div class="relative z-10 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full shadow-lg animate-pulse"></div>
-                                                    <!-- Orbiting dots -->
+                                                    <!-- Central star representing the nakshatra -->
+                                                    <div class="relative z-10 w-10 h-10 bg-gradient-to-br from-yellow-400 via-orange-400 to-red-500 rounded-full shadow-2xl animate-pulse"></div>
+                                                    <!-- Orbiting dots representing planetary influences -->
                                                     <div class="absolute inset-0 animate-spin" style="animation-duration: 8s;">
-                                                        <div class="absolute top-0 left-1/2 w-2 h-2 bg-purple-400 rounded-full shadow-sm transform -translate-x-1/2 -translate-y-1/2"></div>
+                                                        <div class="absolute top-0 left-1/2 w-2 h-2 bg-purple-400 rounded-full shadow-lg transform -translate-x-1/2 -translate-y-1/2"></div>
                                                     </div>
                                                     <div class="absolute inset-0 animate-spin" style="animation-duration: 12s; animation-direction: reverse;">
-                                                        <div class="absolute bottom-0 left-1/2 w-1.5 h-1.5 bg-blue-400 rounded-full shadow-sm transform -translate-x-1/2 translate-y-1/2"></div>
+                                                        <div class="absolute bottom-0 left-1/2 w-1.5 h-1.5 bg-blue-400 rounded-full shadow-lg transform -translate-x-1/2 translate-y-1/2"></div>
+                                                    </div>
+                                                    <div class="absolute inset-0 animate-spin" style="animation-duration: 15s;">
+                                                        <div class="absolute left-0 top-1/2 w-1.5 h-1.5 bg-green-400 rounded-full shadow-lg transform -translate-x-1/2 -translate-y-1/2"></div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Complete information display -->
-                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                                                <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
-                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Nakshatra</p>
-                                                    <p class="text-lg font-bold text-purple-700 brand-font">${nakshatraName}</p>
+                                            <!-- Comprehensive mystical description -->
+                                            <div class="bg-gradient-to-r from-purple-100 via-blue-50 to-indigo-100 rounded-2xl p-6 border border-purple-200">
+                                                <div class="text-center">
+                                                    <h4 class="text-lg font-bold text-purple-800 mb-3 brand-font">Your Cosmic Connection</h4>
+                                                    <p class="text-gray-700 leading-relaxed mb-4">
+                                                        The syllable "<span class="font-bold text-purple-600">${capitalize(cellText)}</span>" in your name
+                                                        resonates with <span class="font-bold text-blue-600">${nakshatraName}</span>
+                                                        (modern name: <span class="font-semibold text-indigo-600">${nakshatraInfo.modernName}</span>),
+                                                        whose sacred symbol is <span class="font-semibold text-green-600">${nakshatraInfo.symbol}</span>.
+                                                    </p>
+                                                    <p class="text-gray-700 leading-relaxed mb-4">
+                                                        This cosmic connection is guided by <span class="font-bold text-orange-600">${nakshatraInfo.rulingPlanet}</span>
+                                                        and blessed by <span class="font-bold text-purple-700">${nakshatraInfo.deity}</span>,
+                                                        bridging ancient celestial wisdom with modern astronomical understanding.
+                                                    </p>
+                                                    <div class="bg-white/50 rounded-lg p-3 mt-4">
+                                                        <p class="text-sm italic text-gray-600">
+                                                            🌟 <strong>Starseed Insight:</strong> Your name carries the vibrational essence of
+                                                            <span class="font-semibold text-indigo-600">${nakshatraInfo.modernName}</span>,
+                                                            connecting you to both ancient spiritual wisdom and modern cosmic understanding.
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
-                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Pada</p>
-                                                    <p class="text-xl font-bold text-blue-700">${padaNumber}</p>
-                                                </div>
-                                                <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
-                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Source Word</p>
-                                                    <p class="text-lg font-bold text-gray-700 italic">"${syllablesMap.get(cellText).word}"</p>
-                                                </div>
-                                            </div>
-
-                                            <!-- Mystical description -->
-                                            <div class="bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl p-4 border border-purple-200">
-                                                <p class="text-sm text-gray-700 leading-relaxed">
-                                                    <span class="font-semibold text-purple-700">Cosmic Connection:</span><br>
-                                                    The syllable "<span class="font-bold text-purple-600">${capitalize(cellText)}</span>" in your name
-                                                    resonates with the vibrational energy of <span class="font-bold text-blue-600">${nakshatraName}</span>,
-                                                    connecting you to the ancient wisdom of the stars.
-                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -525,6 +671,17 @@
             nameInput.addEventListener('blur', function() {
                 this.classList.remove('ring-4', 'ring-purple-300');
             });
+
+            // Privacy Notice Modal Functions
+            window.showPrivacyNotice = function() {
+                document.getElementById('privacyModal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            };
+
+            window.hidePrivacyNotice = function() {
+                document.getElementById('privacyModal').classList.add('hidden');
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            };
         });
     </script>
 </body>
