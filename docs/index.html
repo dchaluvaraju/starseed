@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Starseed Reference</title>
+    <title>Starseed - Unlock Your Name's Soul Vibration</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
-        .devanagari {
-            font-family: 'Tiro Devanagari Hindi', serif;
+        .brand-font {
+            font-family: 'Playfair Display', serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
         /* Style for table headers */
         th {
@@ -23,7 +31,7 @@
         /* Style for table cells */
         td {
             @apply px-4 py-3 whitespace-nowrap text-sm text-gray-800;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
         /* Add borders to the table */
         table {
@@ -35,179 +43,286 @@
         }
         /* Style for highlighted cells */
         .highlight {
-            @apply bg-yellow-300 font-bold text-black;
+            @apply bg-gradient-to-r from-purple-300 to-blue-300 font-bold text-gray-800 transform scale-105;
+        }
+        .star-glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 text-gray-900">
 
     <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <header class="text-center mb-10">
-            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">Starseed</h1>
-            <p class="mt-3 text-base text-gray-600 max-w-2xl mx-auto">Unlock the soul vibration of your name</p>
+        <!-- Header Section with Logo and Background -->
+        <header class="text-center mb-12 relative py-16 overflow-hidden rounded-3xl">
+            <!-- Background Image -->
+            <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+                 style="background-image: url('assets/cover.png');">
+            </div>
+            <!-- Overlay for better text readability -->
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-900/30 to-blue-900/30"></div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+                <div class="flex justify-center items-center mb-6">
+                    <img src="assets/vector/default.svg" alt="Starseed Logo" class="w-16 h-16 mr-4 star-glow">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold gradient-bg bg-clip-text text-transparent brand-font">
+                        Starseed
+                    </h1>
+                </div>
+                <p class="mt-4 text-xl text-white max-w-3xl mx-auto font-light drop-shadow-lg">
+                    Unlock the soul vibration of your name
+                </p>
+                <p class="mt-2 text-base text-purple-100 max-w-2xl mx-auto drop-shadow-lg">
+                    Discover your Namakshara (name syllable) and explore the cosmic connection between your name and the stars
+                </p>
+            </div>
         </header>
 
         <!-- Search Section -->
-        <section id="search-section" class="max-w-2xl mx-auto mb-10 p-6 bg-white rounded-xl shadow-md">
-            <div class="flex flex-col sm:flex-row gap-4">
-                <input type="text" id="name-input" placeholder="Enter your name (e.g., Brave World)" class="flex-grow w-full px-4 py-2 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button id="find-button" class="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors">
-                    Find Namakshara
-                </button>
+        <section id="search-section" class="max-w-4xl mx-auto mb-12">
+            <div class="glass-morphism rounded-2xl p-8 shadow-2xl">
+                <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                    <input type="text" id="name-input"
+                           placeholder="Enter your full name (e.g., John Smith)"
+                           class="flex-grow w-full px-6 py-4 text-lg text-gray-700 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300">
+                    <button id="find-button"
+                            class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-lg font-semibold rounded-xl hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        Discover My Starseed
+                    </button>
+                </div>
+                <div id="results-display" class="min-h-[100px] text-center"></div>
             </div>
-            <div id="results-display" class="mt-5 text-center text-gray-700"></div>
         </section>
 
-        <main class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Devanagari Table Section -->
-            <section id="devanagari-section">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800 devanagari">अवकहादः चक्र</h2>
-                <div class="overflow-x-auto bg-white rounded-lg shadow-md">
-                    <table id="devanagari-table" class="min-w-full">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="devanagari">नक्षत्र</th><th class="devanagari">पद 1</th><th class="devanagari">पद 2</th><th class="devanagari">पद 3</th><th class="devanagari">पद 4</th>
-                                <th class="devanagari">नक्षत्र</th><th class="devanagari">पद 1</th><th class="devanagari">पद 2</th><th class="devanagari">पद 3</th><th class="devanagari">पद 4</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 devanagari">
-                            <tr>
-                                <td>अश्विनी</td><td class="text-center">चु</td><td class="text-center">चे</td><td class="text-center">चो</td><td class="text-center">ल</td>
-                                <td>स्वाति</td><td class="text-center">रु</td><td class="text-center">रे</td><td class="text-center">रो</td><td class="text-center">त</td>
-                            </tr>
-                            <tr>
-                                <td>भरणी</td><td class="text-center">लि</td><td class="text-center">लु</td><td class="text-center">ले</td><td class="text-center">लो</td>
-                                <td>विशाखा</td><td class="text-center">ति</td><td class="text-center">तु</td><td class="text-center">ते</td><td class="text-center">तो</td>
-                            </tr>
-                            <tr>
-                                <td>कृत्तिका</td><td class="text-center">अ</td><td class="text-center">इ</td><td class="text-center">उ</td><td class="text-center">ए</td>
-                                <td>अनुराधा</td><td class="text-center">न</td><td class="text-center">नि</td><td class="text-center">नु</td><td class="text-center">ने</td>
-                            </tr>
-                            <tr>
-                                <td>रोहिणी</td><td class="text-center">ओ</td><td class="text-center">व</td><td class="text-center">वि</td><td class="text-center">वु</td>
-                                <td>ज्येष्ठा</td><td class="text-center">नो</td><td class="text-center">य</td><td class="text-center">यि</td><td class="text-center">यु</td>
-                            </tr>
-                            <tr>
-                                <td>मृगशीर्ष</td><td class="text-center">वे</td><td class="text-center">वो</td><td class="text-center">क</td><td class="text-center">कि</td>
-                                <td>मूला</td><td class="text-center">य</td><td class="text-center">यो</td><td class="text-center">ब</td><td class="text-center">बि</td>
-                            </tr>
-                            <tr>
-                                <td>आर्द्रा</td><td class="text-center">कु</td><td class="text-center">घ</td><td class="text-center">ङ</td><td class="text-center">छ</td>
-                                <td>पूर्वाषाढ़ा</td><td class="text-center">भु</td><td class="text-center">ध</td><td class="text-center">भ</td><td class="text-center">ढ</td>
-                            </tr>
-                            <tr>
-                                <td>पुनर्वसु</td><td class="text-center">के</td><td class="text-center">को</td><td class="text-center">ह</td><td class="text-center">हि</td>
-                                <td>उत्तराषाढ़ा</td><td class="text-center">बे</td><td class="text-center">बो</td><td class="text-center">ज</td><td class="text-center">जि</td>
-                            </tr>
-                            <tr>
-                                <td>पुष्य</td><td class="text-center">हु</td><td class="text-center">हे</td><td class="text-center">हो</td><td class="text-center">ड</td>
-                                <td>अभिजित्</td><td class="text-center">जु</td><td class="text-center">जे</td><td class="text-center">जो</td><td class="text-center">ख</td>
-                            </tr>
-                            <tr>
-                                <td>आश्लेषा</td><td class="text-center">डि</td><td class="text-center">डु</td><td class="text-center">डे</td><td class="text-center">डो</td>
-                                <td>श्रवण</td><td class="text-center">शि</td><td class="text-center">शु</td><td class="text-center">शे</td><td class="text-center">शो</td>
-                            </tr>
-                            <tr>
-                                <td>मघा</td><td class="text-center">म</td><td class="text-center">मि</td><td class="text-center">मु</td><td class="text-center">मे</td>
-                                <td>धनिष्ठा</td><td class="text-center">ग</td><td class="text-center">गि</td><td class="text-center">गु</td><td class="text-center">गे</td>
-                            </tr>
-                             <tr>
-                                <td>पू० फाल्गुनी</td><td class="text-center">मो</td><td class="text-center">ट</td><td class="text-center">टि</td><td class="text-center">टु</td>
-                                <td>शतभिषा</td><td class="text-center">गो</td><td class="text-center">स</td><td class="text-center">सि</td><td class="text-center">सु</td>
-                            </tr>
-                            <tr>
-                                <td>उ० फाल्गुनी</td><td class="text-center">टे</td><td class="text-center">टो</td><td class="text-center">प</td><td class="text-center">पि</td>
-                                <td>पू० भाद्रा</td><td class="text-center">से</td><td class="text-center">सो</td><td class="text-center">द</td><td class="text-center">दि</td>
-                            </tr>
-                            <tr>
-                                <td>हस्त</td><td class="text-center">पु</td><td class="text-center">ष</td><td class="text-center">ण</td><td class="text-center">ठ</td>
-                                <td>उ० भाद्रा</td><td class="text-center">दु</td><td class="text-center">थ</td><td class="text-center">झ</td><td class="text-center">ञ</td>
-                            </tr>
-                            <tr>
-                                <td>चित्रा</td><td class="text-center">पे</td><td class="text-center">पो</td><td class="text-center">र</td><td class="text-center">रि</td>
-                                <td>रेवती</td><td class="text-center">दे</td><td class="text-center">दो</td><td class="text-center">च</td><td class="text-center">चि</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+        <!-- Nakshatra Reference Table -->
+        <main class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 brand-font mb-2">Nakshatra Reference Guide</h2>
+                <p class="text-gray-600">Explore all 27 Nakshatras and their corresponding syllables</p>
+            </div>
 
-            <!-- English Transliteration Table Section -->
-            <section id="english-section">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-800">English Transliteration</h2>
-                <div class="overflow-x-auto bg-white rounded-lg shadow-md">
-                    <table id="english-table" class="min-w-full">
-                        <thead class="bg-gray-100">
+            <div class="glass-morphism rounded-2xl p-6 shadow-xl">
+                <div class="overflow-x-auto">
+                    <table id="nakshatra-table" class="min-w-full">
+                        <thead class="bg-gradient-to-r from-purple-100 to-blue-100">
                             <tr>
-                                <th>Nakshatra</th><th>1st Pada</th><th>2nd Pada</th><th>3rd Pada</th><th>4th Pada</th>
-                                <th>Nakshatra</th><th>1st Pada</th><th>2nd Pada</th><th>3rd Pada</th><th>4th Pada</th>
+                                <th class="rounded-tl-xl">Nakshatra</th>
+                                <th>1st Pada</th>
+                                <th>2nd Pada</th>
+                                <th>3rd Pada</th>
+                                <th>4th Pada</th>
+                                <th>Nakshatra</th>
+                                <th>1st Pada</th>
+                                <th>2nd Pada</th>
+                                <th>3rd Pada</th>
+                                <th class="rounded-tr-xl">4th Pada</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                           <tr>
-                                <td>Ashwini</td><td class="text-center">Chu</td><td class="text-center">Che</td><td class="text-center">Cho</td><td class="text-center">La</td>
-                                <td>Swati</td><td class="text-center">Ru</td><td class="text-center">Re</td><td class="text-center">Ro</td><td class="text-center">Ta</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Ashwini</td>
+                                <td class="text-center font-medium">Chu</td>
+                                <td class="text-center font-medium">Che</td>
+                                <td class="text-center font-medium">Cho</td>
+                                <td class="text-center font-medium">La</td>
+                                <td class="font-semibold text-purple-700">Swati</td>
+                                <td class="text-center font-medium">Ru</td>
+                                <td class="text-center font-medium">Re</td>
+                                <td class="text-center font-medium">Ro</td>
+                                <td class="text-center font-medium">Ta</td>
                             </tr>
-                            <tr>
-                                <td>Bharani</td><td class="text-center">Li</td><td class="text-center">Lu</td><td class="text-center">Le</td><td class="text-center">Lo</td>
-                                <td>Vishakha</td><td class="text-center">Ti</td><td class="text-center">Tu</td><td class="text-center">Te</td><td class="text-center">To</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Bharani</td>
+                                <td class="text-center font-medium">Li</td>
+                                <td class="text-center font-medium">Lu</td>
+                                <td class="text-center font-medium">Le</td>
+                                <td class="text-center font-medium">Lo</td>
+                                <td class="font-semibold text-purple-700">Vishakha</td>
+                                <td class="text-center font-medium">Ti</td>
+                                <td class="text-center font-medium">Tu</td>
+                                <td class="text-center font-medium">Te</td>
+                                <td class="text-center font-medium">To</td>
                             </tr>
-                            <tr>
-                                <td>Krittika</td><td class="text-center">A</td><td class="text-center">I</td><td class="text-center">U</td><td class="text-center">E</td>
-                                <td>Anuradha</td><td class="text-center">Na</td><td class="text-center">Ni</td><td class="text-center">Nu</td><td class="text-center">Ne</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Krittika</td>
+                                <td class="text-center font-medium">A</td>
+                                <td class="text-center font-medium">I</td>
+                                <td class="text-center font-medium">U</td>
+                                <td class="text-center font-medium">E</td>
+                                <td class="font-semibold text-purple-700">Anuradha</td>
+                                <td class="text-center font-medium">Na</td>
+                                <td class="text-center font-medium">Ni</td>
+                                <td class="text-center font-medium">Nu</td>
+                                <td class="text-center font-medium">Ne</td>
                             </tr>
-                            <tr>
-                                <td>Rohini</td><td class="text-center">O</td><td class="text-center">Va</td><td class="text-center">Vi</td><td class="text-center">Vu</td>
-                                <td>Jyeshtha</td><td class="text-center">No</td><td class="text-center">Ya</td><td class="text-center">Yi</td><td class="text-center">Yu</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Rohini</td>
+                                <td class="text-center font-medium">O</td>
+                                <td class="text-center font-medium">Va</td>
+                                <td class="text-center font-medium">Vi</td>
+                                <td class="text-center font-medium">Vu</td>
+                                <td class="font-semibold text-purple-700">Jyeshtha</td>
+                                <td class="text-center font-medium">No</td>
+                                <td class="text-center font-medium">Ya</td>
+                                <td class="text-center font-medium">Yi</td>
+                                <td class="text-center font-medium">Yu</td>
                             </tr>
-                            <tr>
-                                <td>Mrigashirsha</td><td class="text-center">Ve</td><td class="text-center">Vo</td><td class="text-center">Ka</td><td class="text-center">Ki</td>
-                                <td>Mula</td><td class="text-center">Ye</td><td class="text-center">Yo</td><td class="text-center">Ba</td><td class="text-center">Bi</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Mrigashirsha</td>
+                                <td class="text-center font-medium">Ve</td>
+                                <td class="text-center font-medium">Vo</td>
+                                <td class="text-center font-medium">Ka</td>
+                                <td class="text-center font-medium">Ki</td>
+                                <td class="font-semibold text-purple-700">Mula</td>
+                                <td class="text-center font-medium">Ye</td>
+                                <td class="text-center font-medium">Yo</td>
+                                <td class="text-center font-medium">Ba</td>
+                                <td class="text-center font-medium">Bi</td>
                             </tr>
-                            <tr>
-                                <td>Ardra</td><td class="text-center">Ku</td><td class="text-center">Gha</td><td class="text-center">Nga</td><td class="text-center">Chha</td>
-                                <td>Purva Ashadha</td><td class="text-center">Bhu</td><td class="text-center">Dha</td><td class="text-center">Bha</td><td class="text-center">Dha</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Ardra</td>
+                                <td class="text-center font-medium">Ku</td>
+                                <td class="text-center font-medium">Gha</td>
+                                <td class="text-center font-medium">Nga</td>
+                                <td class="text-center font-medium">Chha</td>
+                                <td class="font-semibold text-purple-700">Purva Ashadha</td>
+                                <td class="text-center font-medium">Bhu</td>
+                                <td class="text-center font-medium">Dha</td>
+                                <td class="text-center font-medium">Bha</td>
+                                <td class="text-center font-medium">Dha</td>
                             </tr>
-                            <tr>
-                                <td>Punarvasu</td><td class="text-center">Ke</td><td class="text-center">Ko</td><td class="text-center">Ha</td><td class="text-center">Hi</td>
-                                <td>Uttara Ashadha</td><td class="text-center">Be</td><td class="text-center">Bo</td><td class="text-center">Ja</td><td class="text-center">Ji</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Punarvasu</td>
+                                <td class="text-center font-medium">Ke</td>
+                                <td class="text-center font-medium">Ko</td>
+                                <td class="text-center font-medium">Ha</td>
+                                <td class="text-center font-medium">Hi</td>
+                                <td class="font-semibold text-purple-700">Uttara Ashadha</td>
+                                <td class="text-center font-medium">Be</td>
+                                <td class="text-center font-medium">Bo</td>
+                                <td class="text-center font-medium">Ja</td>
+                                <td class="text-center font-medium">Ji</td>
                             </tr>
-                            <tr>
-                                <td>Pushya</td><td class="text-center">Hu</td><td class="text-center">He</td><td class="text-center">Ho</td><td class="text-center">Da</td>
-                                <td>Abhijit</td><td class="text-center">Ju</td><td class="text-center">Je</td><td class="text-center">Jo</td><td class="text-center">Kha</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Pushya</td>
+                                <td class="text-center font-medium">Hu</td>
+                                <td class="text-center font-medium">He</td>
+                                <td class="text-center font-medium">Ho</td>
+                                <td class="text-center font-medium">Da</td>
+                                <td class="font-semibold text-purple-700">Abhijit</td>
+                                <td class="text-center font-medium">Ju</td>
+                                <td class="text-center font-medium">Je</td>
+                                <td class="text-center font-medium">Jo</td>
+                                <td class="text-center font-medium">Kha</td>
                             </tr>
-                            <tr>
-                                <td>Ashlesha</td><td class="text-center">Di</td><td class="text-center">Du</td><td class="text-center">De</td><td class="text-center">Do</td>
-                                <td>Shravana</td><td class="text-center">Shi</td><td class="text-center">Shu</td><td class="text-center">She</td><td class="text-center">Sho</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Ashlesha</td>
+                                <td class="text-center font-medium">Di</td>
+                                <td class="text-center font-medium">Du</td>
+                                <td class="text-center font-medium">De</td>
+                                <td class="text-center font-medium">Do</td>
+                                <td class="font-semibold text-purple-700">Shravana</td>
+                                <td class="text-center font-medium">Shi</td>
+                                <td class="text-center font-medium">Shu</td>
+                                <td class="text-center font-medium">She</td>
+                                <td class="text-center font-medium">Sho</td>
                             </tr>
-                            <tr>
-                                <td>Magha</td><td class="text-center">Ma</td><td class="text-center">Mi</td><td class="text-center">Mu</td><td class="text-center">Me</td>
-                                <td>Dhanishtha</td><td class="text-center">Ga</td><td class="text-center">Gi</td><td class="text-center">Gu</td><td class="text-center">Ge</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Magha</td>
+                                <td class="text-center font-medium">Ma</td>
+                                <td class="text-center font-medium">Mi</td>
+                                <td class="text-center font-medium">Mu</td>
+                                <td class="text-center font-medium">Me</td>
+                                <td class="font-semibold text-purple-700">Dhanishtha</td>
+                                <td class="text-center font-medium">Ga</td>
+                                <td class="text-center font-medium">Gi</td>
+                                <td class="text-center font-medium">Gu</td>
+                                <td class="text-center font-medium">Ge</td>
                             </tr>
-                             <tr>
-                                <td>Purva Phalguni</td><td class="text-center">Mo</td><td class="text-center">Ta</td><td class="text-center">Ti</td><td class="text-center">Tu</td>
-                                <td>Shatabhisha</td><td class="text-center">Go</td><td class="text-center">Sa</td><td class="text-center">Si</td><td class="text-center">Su</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Purva Phalguni</td>
+                                <td class="text-center font-medium">Mo</td>
+                                <td class="text-center font-medium">Ta</td>
+                                <td class="text-center font-medium">Ti</td>
+                                <td class="text-center font-medium">Tu</td>
+                                <td class="font-semibold text-purple-700">Shatabhisha</td>
+                                <td class="text-center font-medium">Go</td>
+                                <td class="text-center font-medium">Sa</td>
+                                <td class="text-center font-medium">Si</td>
+                                <td class="text-center font-medium">Su</td>
                             </tr>
-                            <tr>
-                                <td>Uttara Phalguni</td><td class="text-center">Te</td><td class="text-center">To</td><td class="text-center">Pa</td><td class="text-center">Pi</td>
-                                <td>Purva Bhadrapada</td><td class="text-center">Se</td><td class="text-center">So</td><td class="text-center">Da</td><td class="text-center">Di</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Uttara Phalguni</td>
+                                <td class="text-center font-medium">Te</td>
+                                <td class="text-center font-medium">To</td>
+                                <td class="text-center font-medium">Pa</td>
+                                <td class="text-center font-medium">Pi</td>
+                                <td class="font-semibold text-purple-700">Purva Bhadrapada</td>
+                                <td class="text-center font-medium">Se</td>
+                                <td class="text-center font-medium">So</td>
+                                <td class="text-center font-medium">Da</td>
+                                <td class="text-center font-medium">Di</td>
                             </tr>
-                            <tr>
-                                <td>Hasta</td><td class="text-center">Pu</td><td class="text-center">Sha</td><td class="text-center">Na</td><td class="text-center">Tha</td>
-                                <td>Uttara Bhadrapada</td><td class="text-center">Du</td><td class="text-center">Tha</td><td class="text-center">Jha</td><td class="text-center">Jna</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Hasta</td>
+                                <td class="text-center font-medium">Pu</td>
+                                <td class="text-center font-medium">Sha</td>
+                                <td class="text-center font-medium">Na</td>
+                                <td class="text-center font-medium">Tha</td>
+                                <td class="font-semibold text-purple-700">Uttara Bhadrapada</td>
+                                <td class="text-center font-medium">Du</td>
+                                <td class="text-center font-medium">Tha</td>
+                                <td class="text-center font-medium">Jha</td>
+                                <td class="text-center font-medium">Jna</td>
                             </tr>
-                            <tr>
-                                <td>Chitra</td><td class="text-center">Pe</td><td class="text-center">Po</td><td class="text-center">Ra</td><td class="text-center">Ri</td>
-                                <td>Revati</td><td class="text-center">De</td><td class="text-center">Do</td><td class="text-center">Cha</td><td class="text-center">Chi</td>
+                            <tr class="hover:bg-purple-25">
+                                <td class="font-semibold text-purple-700">Chitra</td>
+                                <td class="text-center font-medium">Pe</td>
+                                <td class="text-center font-medium">Po</td>
+                                <td class="text-center font-medium">Ra</td>
+                                <td class="text-center font-medium">Ri</td>
+                                <td class="font-semibold text-purple-700">Revati</td>
+                                <td class="text-center font-medium">De</td>
+                                <td class="text-center font-medium">Do</td>
+                                <td class="text-center font-medium">Cha</td>
+                                <td class="text-center font-medium">Chi</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </section>
+            </div>
         </main>
 
-        <footer class="text-center mt-12 py-4 border-t border-gray-300">
-            <p class="text-sm text-gray-500">&copy; 2025 Starseed Reference. All Rights Reserved.</p>
+        <!-- About Section -->
+        <section class="max-w-4xl mx-auto mb-12">
+            <div class="glass-morphism rounded-2xl p-8 shadow-xl text-center">
+                <h3 class="text-2xl font-bold text-gray-800 brand-font mb-6">About Starseed</h3>
+                <div class="space-y-6 text-left max-w-3xl mx-auto">
+                    <p class="text-gray-600 leading-relaxed text-lg">
+                        The Starseed system connects your name to the ancient wisdom of the Nakshatras -
+                        the 27 lunar mansions that form the foundation of Vedic astrology. Each syllable
+                        of your name carries a unique cosmic vibration that aligns with specific stellar energies.
+                    </p>
+                    <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-xl border-l-4 border-purple-400">
+                        <p class="text-gray-700 leading-relaxed italic text-lg">
+                            Every name of a person, place, or organization has a core syllable which creates a certain vibration -
+                            and that vibration is linked to a Nakshatra (lunar mansion or collection of stars). This syllable
+                            is like the seed which grows into a tree to yield a fruit (title or name). Just as a seed is for a tree,
+                            a syllable is for a name. Due to the relationship between this seed syllable and the vibrational
+                            energy of stars, we call this system "Starseed."
+                        </p>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed text-lg">
+                        By discovering your Namakshara, you can gain deeper insights into your personality,
+                        life path, and spiritual connection to the universe.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-8 border-t border-gray-200">
+            <p class="text-sm text-gray-500">&copy; 2025 Starseed. All Rights Reserved.</p>
         </footer>
 
     </div>
@@ -218,13 +333,12 @@
             const nameInput = document.getElementById('name-input');
             const findButton = document.getElementById('find-button');
             const resultsDisplay = document.getElementById('results-display');
-            const englishTable = document.getElementById('english-table').querySelector('tbody');
-            const devanagariTable = document.getElementById('devanagari-table').querySelector('tbody');
+            const nakshatraTable = document.getElementById('nakshatra-table').querySelector('tbody');
 
             // --- Create a mapping of all possible padas for efficient lookup ---
             const allPadas = new Set();
-            const englishPadaCells = englishTable.querySelectorAll('td:not(:first-child):not(:nth-child(6))'); // Select only pada cells
-            englishPadaCells.forEach(cell => {
+            const padaCells = nakshatraTable.querySelectorAll('td:not(:first-child):not(:nth-child(6))');
+            padaCells.forEach(cell => {
                 allPadas.add(cell.textContent.trim().toLowerCase());
             });
 
@@ -247,7 +361,7 @@
                 resultsDisplay.innerHTML = '';
                 const name = nameInput.value.trim().toLowerCase();
                 if (!name) {
-                    resultsDisplay.innerHTML = `<p class="text-red-500">Please enter a name.</p>`;
+                    resultsDisplay.innerHTML = `<p class="text-red-500 text-center">Please enter a name.</p>`;
                     return;
                 }
                 const words = name.split(/\s+/);
@@ -256,7 +370,7 @@
                 words.forEach(word => {
                     if (!word) return;
                     let matchFound = false;
-                    
+
                     // Priority 1: Direct Match (e.g., "che" in "chetan")
                     for (let len = 4; len >= 2 && !matchFound; len--) {
                         if (word.length >= len) {
@@ -269,7 +383,7 @@
                             }
                         }
                     }
-                    
+
                     if (matchFound) {
                         return; // Found a direct match, so skip phonetic search for this word
                     }
@@ -300,10 +414,12 @@
 
             // --- Function to highlight cells and display detailed results ---
             const highlightAndDisplay = (syllablesMap) => {
-                let resultsHTML = '<h3 class="text-lg font-semibold mb-3 text-left">Namaksharas Found:</h3><div class="space-y-3">';
+                let resultsHTML = '<h3 class="text-2xl font-bold mb-6 text-center text-purple-800 brand-font">✨ Your Starseed Connection ✨</h3>';
+                resultsHTML += '<div class="max-w-4xl mx-auto">';
+                resultsHTML += '<div class="grid grid-cols-1 gap-6">';
                 const alreadyDisplayed = new Set(); // Use a unique key to track displayed results
 
-                englishTable.querySelectorAll('tr').forEach((row, rowIndex) => {
+                nakshatraTable.querySelectorAll('tr').forEach((row, rowIndex) => {
                     row.querySelectorAll('td').forEach((cell, cellIndex) => {
                         const cellText = cell.textContent.trim().toLowerCase();
                         if (syllablesMap.has(cellText)) {
@@ -312,7 +428,7 @@
                             const nakshatraCellIndex = isLeftHalf ? 0 : 5;
                             const padaNumber = isLeftHalf ? cellIndex : cellIndex - 5;
                             const nakshatraName = row.cells[nakshatraCellIndex].textContent;
-                            
+
                             // Create a unique key for this result (e.g., "da-Pushya") to handle cases like two 'Da's
                             const uniqueKey = `${cellText}-${nakshatraName}`;
 
@@ -320,38 +436,77 @@
                             if (!alreadyDisplayed.has(uniqueKey)) {
                                 // Highlight cells
                                 cell.classList.add('highlight');
-                                const devanagariCell = devanagariTable.rows[rowIndex].cells[cellIndex];
-                                if (devanagariCell) {
-                                    devanagariCell.classList.add('highlight');
-                                }
-                                
-                                const devanagariNakshatraName = devanagariTable.rows[rowIndex].cells[nakshatraCellIndex].textContent;
 
-                                // Build HTML for this result card
+                                // Build HTML for this result card - more centered and innovative
                                 resultsHTML += `
-                                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 text-left shadow-sm">
-                                        <p class="text-base font-bold text-blue-700 flex items-center gap-3">
-                                            <span>${capitalize(cellText)}</span>
-                                            <span class="devanagari text-2xl">${devanagariCell.textContent}</span>
-                                        </p>
-                                        <div class="mt-2 pt-2 border-t border-gray-200 text-sm text-gray-700 space-y-1">
-                                            <p>
-                                                <span class="font-semibold text-gray-500 w-20 inline-block">Nakshatra:</span> ${nakshatraName} (<span class="devanagari">${devanagariNakshatraName}</span>)
-                                            </p>
-                                            <p>
-                                                <span class="font-semibold text-gray-500 w-20 inline-block">Pada:</span> ${padaNumber}
-                                            </p>
+                                    <div class="mx-auto max-w-2xl">
+                                        <div class="bg-gradient-to-br from-white via-purple-50 to-blue-50 rounded-2xl border-2 border-purple-200 shadow-2xl hover:shadow-purple-300/50 transition-all duration-500 transform hover:scale-105 p-8 text-center">
+                                            <!-- Main syllable display -->
+                                            <div class="mb-6">
+                                                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full shadow-lg mb-4">
+                                                    <span class="text-2xl font-bold text-white brand-font">
+                                                        ${capitalize(cellText)}
+                                                    </span>
+                                                </div>
+                                                <p class="text-sm text-purple-600 font-medium">Your Soul Syllable</p>
+                                            </div>
+
+                                            <!-- Star constellation visual -->
+                                            <div class="flex justify-center items-center mb-6">
+                                                <div class="relative">
+                                                    <!-- Star pattern background -->
+                                                    <div class="absolute inset-0 flex items-center justify-center">
+                                                        <div class="w-32 h-32 border-2 border-purple-200 rounded-full opacity-30"></div>
+                                                        <div class="absolute w-24 h-24 border border-purple-300 rounded-full opacity-40"></div>
+                                                    </div>
+                                                    <!-- Central star -->
+                                                    <div class="relative z-10 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full shadow-lg animate-pulse"></div>
+                                                    <!-- Orbiting dots -->
+                                                    <div class="absolute inset-0 animate-spin" style="animation-duration: 8s;">
+                                                        <div class="absolute top-0 left-1/2 w-2 h-2 bg-purple-400 rounded-full shadow-sm transform -translate-x-1/2 -translate-y-1/2"></div>
+                                                    </div>
+                                                    <div class="absolute inset-0 animate-spin" style="animation-duration: 12s; animation-direction: reverse;">
+                                                        <div class="absolute bottom-0 left-1/2 w-1.5 h-1.5 bg-blue-400 rounded-full shadow-sm transform -translate-x-1/2 translate-y-1/2"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Complete information display -->
+                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                                                <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
+                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Nakshatra</p>
+                                                    <p class="text-lg font-bold text-purple-700 brand-font">${nakshatraName}</p>
+                                                </div>
+                                                <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
+                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Pada</p>
+                                                    <p class="text-xl font-bold text-blue-700">${padaNumber}</p>
+                                                </div>
+                                                <div class="bg-white/60 rounded-xl p-4 backdrop-blur-sm">
+                                                    <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Source Word</p>
+                                                    <p class="text-lg font-bold text-gray-700 italic">"${syllablesMap.get(cellText).word}"</p>
+                                                </div>
+                                            </div>
+
+                                            <!-- Mystical description -->
+                                            <div class="bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl p-4 border border-purple-200">
+                                                <p class="text-sm text-gray-700 leading-relaxed">
+                                                    <span class="font-semibold text-purple-700">Cosmic Connection:</span><br>
+                                                    The syllable "<span class="font-bold text-purple-600">${capitalize(cellText)}</span>" in your name
+                                                    resonates with the vibrational energy of <span class="font-bold text-blue-600">${nakshatraName}</span>,
+                                                    connecting you to the ancient wisdom of the stars.
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 `;
-                                
+
                                 // Add the unique key to the set to prevent duplicates
                                 alreadyDisplayed.add(uniqueKey);
                             }
                         }
                     });
                 });
-                resultsHTML += '</div>';
+                resultsHTML += '</div></div>';
                 resultsDisplay.innerHTML = resultsHTML;
             };
 
@@ -371,6 +526,15 @@
                 if (event.key === 'Enter') {
                     findNamakshara();
                 }
+            });
+
+            // Add smooth focus animation
+            nameInput.addEventListener('focus', function() {
+                this.classList.add('ring-4', 'ring-purple-300');
+            });
+
+            nameInput.addEventListener('blur', function() {
+                this.classList.remove('ring-4', 'ring-purple-300');
             });
         });
     </script>
